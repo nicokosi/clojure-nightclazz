@@ -3,7 +3,7 @@
 
 ;; generation:
 (def world (atom
-             #{[0 1] [1 2] [1 1] [1 3]}))
+             #{[0 1] [1 2] [1 1] [1 3] [2 1] [2 2] [2 4] [3 2] [3 3]}))
 
 (defn setup []
   (q/smooth)
@@ -19,13 +19,11 @@
           y (+ 100 (* y 20))]
       (q/ellipse x y diam diam))))
 
-#_(q/defsketch example ;;Define a new sketch named example
-             :title "game of life" ;;Set the title of the sketch
-             :setup setup ;;Specify the setup fn
-             :draw draw ;;Specify the draw fn
-             :size [323 200]) ;;You struggle to beat the golden ratio
-
-#_(swap! world step)
+(q/defsketch game-of-life
+             :title "game of life"
+             :setup setup
+             :draw draw
+             :size [323 200])
 
 (defn neighbours
   "calcule les 8 voisines" ; doc
@@ -45,9 +43,7 @@
     (set (keys (filter (fn [[cell n]]
                          (if (contains? cells cell)
                                         (<= 2 n 3))
-                                        ;(= n 3)))
                          ) freqs)))))
 
-#_
-  (while true?(swap! world step)
-  (Thread/sleep 100))
+(while true?(swap! world step)
+  (Thread/sleep 1000))
